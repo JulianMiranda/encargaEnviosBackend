@@ -1,0 +1,16 @@
+export enum ENTITY {
+  CATEGORY = 'categories',
+  NODE = 'nodes',
+  SUBCATEGORY = 'subcategories',
+  TRANSFER = 'transfers',
+  USERS = 'users',
+  ROLES = 'roles',
+  PRICE = 'prices',
+  MESSAGES = 'messages',
+  MYSHOP = 'shop',
+  ORDER = 'orders',
+  CARNET = 'carnets',
+  PROMOTION = 'promotions',
+  PROMOTIONFINAL = 'promotionsFinal',
+  TRACKCODE = 'trackcodes',
+}
