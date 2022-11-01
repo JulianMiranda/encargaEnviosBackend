@@ -65,4 +65,10 @@ export class QueriesController {
   notificationAllUsers(): Promise<any> {
     return this.queriesRepository.notificationAllUsers();
   }
+
+  @UseGuards(AuthenticationGuard)
+  @Post('/customNotification')
+  customNotification(@Body() data: any): Promise<any> {
+    return this.queriesRepository.customNotification({ ...data });
+  }
 }

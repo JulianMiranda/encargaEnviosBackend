@@ -169,4 +169,16 @@ export class QueriesRepository {
       throw new InternalServerErrorException('test query error', e);
     }
   }
+  async customNotification(data: any): Promise<any> {
+    try {
+      const { title, body } = data;
+      return await this.notificationsRepository.customNotification(
+        NOTIFICATION.ALLUSERS,
+        title,
+        body,
+      );
+    } catch (e) {
+      throw new InternalServerErrorException('test query error', e);
+    }
+  }
 }

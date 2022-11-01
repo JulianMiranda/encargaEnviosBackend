@@ -235,10 +235,57 @@ export class NotificationsRepository {
     }
   }
 
+  async customNotification(
+    type: NOTIFICATION,
+    title: string,
+    body: string,
+  ): Promise<any> {
+    try {
+      console.log('title', title);
+      console.log('body', body);
+      const allUsers = await this.usersDb
+        .find({ reciveNotifications: true }, { notificationTokens: 1 })
+        .lean();
+
+      const notificationsArray = [];
+
+      for (const user of allUsers) {
+        notificationsArray.push({
+          user: user._id,
+          title,
+          body,
+          type,
+          identifier: user._id,
+          notificationTokens: user.notificationTokens,
+        });
+      }
+
+      const pushNotifications = notificationsArray.map((item) => {
+        const { title, email, user, body } = item;
+        return item.notificationTokens.map((token: string) => ({
+          notification: {
+            title,
+            body,
+          },
+          token,
+        }));
+      });
+
+      if (allUsers.length !== 0) {
+        FirebaseService.sendPushNotifications(flatten(pushNotifications));
+      }
+    } catch (e) {
+      throw new InternalServerErrorException(
+        'create notification Database error',
+        e,
+      );
+    }
+  }
+
   async allUsers(type: NOTIFICATION): Promise<any> {
     try {
       const allUsers = await this.usersDb
-        .find({}, { notificationTokens: 1 })
+        .find({ reciveNotifications: true }, { notificationTokens: 1 })
         .lean();
 
       const notificationsArray = [];
