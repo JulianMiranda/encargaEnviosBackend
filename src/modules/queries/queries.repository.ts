@@ -156,7 +156,24 @@ export class QueriesRepository {
 
   async test(userId: string): Promise<any> {
     try {
-      return this.categoryDb.aggregate(Test(userId));
+      const a = 'Soy Ánormalmente un tánto pero no pácifico para las personas';
+      const b = a.split(' ');
+      const newWords = [];
+
+      b.map((word) => {
+        for (let i = 0; i < word.length; i++) {
+          const caracter = a.charAt(i);
+          if (caracter === 'á' || caracter === 'Á') {
+            const re = /Á/gi;
+            newWords.push(word.replace(re, 'a'));
+          } else {
+            if (!newWords.includes(word)) newWords.push(word);
+          }
+        }
+      });
+
+      console.log('NewWords', newWords);
+      /*  return this.categoryDb.aggregate(Test(userId)); */
     } catch (e) {
       throw new InternalServerErrorException('test query error', e);
     }
