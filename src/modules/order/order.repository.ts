@@ -98,6 +98,8 @@ export class OrderRepository {
 
   async setOrder(data: Order, userId: string): Promise<any> {
     try {
+      const count = await this.orderDb.countDocuments();
+      data.order = (count + 1000).toString();
       const newOrder = new this.orderDb(data);
       const document = await newOrder.save();
       if (document) {

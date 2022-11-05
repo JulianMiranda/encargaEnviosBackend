@@ -16,6 +16,9 @@ export class Order extends Document {
   @IsMongoId()
   trackcode: string;
 
+  @IsString()
+  order: string;
+
   @IsArray()
   car: any[];
 
