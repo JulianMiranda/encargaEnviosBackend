@@ -22,6 +22,7 @@ async function bootstrap() {
 
   await app.listen(PORT);
   console.log('Web Server Packuba listening on port: ', PORT);
+  console.log('Web Server Packuba listening on port2: ', PORT);
   console.log('Database Server connection string: ', MONGO_CONNECTION);
 
   console.log('Web Server Packuba has been succesfully started');
