@@ -1,7 +1,7 @@
 /**
  * PUERTO
  */
-export const PORT = process.env.PORT || 5002;
+export const PORT = process.env.PORT || 5080;
 
 /**
  * Database connection

@@ -1,14 +1,24 @@
-FROM node:18.11 as build
+FROM node:alpine AS development
 
-WORKDIR /encarga
-COPY package*.json .
+WORKDIR /usr/src/encarga
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:18.11
-WORKDIR /encarga
-COPY package.json .
+FROM node:alpine as production
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+
+WORKDIR /usr/src/encarga
+
+COPY package*.json ./
 RUN npm install --only=production
-COPY --from=build /encarga/dist ./dist
-CMD npm run start:prod
+
+COPY . .
+
+COPY --from=development /usr/src/encarga/dist ./dist
+
+CMD ["node","dist/main"]
